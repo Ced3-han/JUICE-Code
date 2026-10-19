@@ -87,8 +87,8 @@ This repository does not contain benchmark data.
 Example download of one Hugging Face benchmark:
 
 ```
-huggingface-cli download lmms-lab/GQA --repo-type dataset --local-dir data/GQA \
-    --include "testdev_balanced_instructions/*" "testdev_balanced_images/*"
+hf download lmms-lab/GQA --repo-type dataset --local-dir data/GQA \
+    --include "testdev_balanced_instructions/*" --include "testdev_balanced_images/*"
 ```
 
 The question ids of AI2D, ScienceQA-IMG, RealWorldQA and MME are row numbers.

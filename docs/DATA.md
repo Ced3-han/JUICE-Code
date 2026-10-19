@@ -33,20 +33,21 @@ Pretraining reads them as they are. You cannot delete them after the build.
 
 ## 2. Download
 
-Install the Hugging Face command line tool (`pip install -U huggingface_hub`).
+The commands use the Hugging Face command line tool `hf` (huggingface_hub 0.34 or later).
+The JUICE environment has it. Do not upgrade huggingface_hub to 2.x (README, section 1.2).
 Run the commands from the root of the repository.
 The revisions are the revisions that we used.
 
 ### 2.1 BLIP3o sets (pretraining and SFT captions)
 
 ```bash
-huggingface-cli download BLIP3o/BLIP3o-Pretrain-Long-Caption --repo-type dataset \
+hf download BLIP3o/BLIP3o-Pretrain-Long-Caption --repo-type dataset \
     --revision e4d07091a466d1a1e35a9b0c61caddc78d14a059 --local-dir data/src/BLIP3o-Pretrain-Long-Caption
-huggingface-cli download BLIP3o/BLIP3o-Pretrain-Short-Caption --repo-type dataset \
+hf download BLIP3o/BLIP3o-Pretrain-Short-Caption --repo-type dataset \
     --revision e84d184540a6cc4fc3b1ba5528bb45dcc6b3fb0e --local-dir data/src/BLIP3o-Pretrain-Short-Caption
-huggingface-cli download BLIP3o/BLIP3o-Pretrain-JourneyDB --repo-type dataset \
+hf download BLIP3o/BLIP3o-Pretrain-JourneyDB --repo-type dataset \
     --revision 734b390be883b2021ae6d6dc1b24e6b97e7253a2 --local-dir data/src/BLIP3o-Pretrain-JourneyDB
-huggingface-cli download BLIP3o/BLIP3o-60k --repo-type dataset \
+hf download BLIP3o/BLIP3o-60k --repo-type dataset \
     --revision f7316b0aa446338ee1707484924aa59457b4bbf3 --local-dir data/src/BLIP3o-60k
 ```
 
@@ -59,9 +60,10 @@ Download the jsonl file and the image archives of 25 sources:
 ```bash
 SRCS="gqa coco lnqa vizwiz oodvqa vg dvqa ocr_vqa clevr tallyqa hfdata Q-Instruct-DB docvqa pathvqa chartqa ai2d
       scienceqa llava textvqa sam wikiart share_textvqa web-celebrity web-landmark"
-huggingface-cli download nyu-visionx/Cambrian-10M --repo-type dataset \
-    --revision a087b9234c59bc6c64e7e4a091a6a618cb887132 --local-dir data/src/Cambrian-10M \
-    --include "jsons/Cambrian7M.jsonl" "allava.tar.gz_part*" $(for s in $SRCS; do echo "$s.tar.gz"; done)
+INCLUDE=(--include "jsons/Cambrian7M.jsonl" --include "allava.tar.gz_part*")
+for s in $SRCS; do INCLUDE+=(--include "$s.tar.gz"); done
+hf download nyu-visionx/Cambrian-10M --repo-type dataset \
+    --revision a087b9234c59bc6c64e7e4a091a6a618cb887132 --local-dir data/src/Cambrian-10M "${INCLUDE[@]}"
 cd data/src/Cambrian-10M
 cat allava.tar.gz_part{1..12} > allava.tar.gz
 mkdir -p images
@@ -92,14 +94,14 @@ The val folders give the image ids of section 5. No val image goes into a COCO c
 ### 2.4 VQAv2, ScienceQA, ShareGPT-4o-Image, DALL-E 3
 
 ```bash
-huggingface-cli download lmms-lab/VQAv2 --repo-type dataset \
+hf download lmms-lab/VQAv2 --repo-type dataset \
     --revision 32665d35052eb4a6d4414851c3c829a72754915a --include "data/train-*" --local-dir data/src/VQAv2
-huggingface-cli download lmms-lab/ScienceQA --repo-type dataset \
+hf download lmms-lab/ScienceQA --repo-type dataset \
     --include "ScienceQA-IMG/train-*" --local-dir data/src/ScienceQA
-huggingface-cli download FreedomIntelligence/ShareGPT-4o-Image --repo-type dataset \
+hf download FreedomIntelligence/ShareGPT-4o-Image --repo-type dataset \
     --revision f9bcb9494e562f3b6d46585bda0e7f0f0d6ec43f \
-    --include "text_to_image.json" "text_to_image_part_*.tar" --local-dir data/src/ShareGPT-4o-Image
-huggingface-cli download OpenDatasets/dalle-3-dataset --repo-type dataset \
+    --include "text_to_image.json" --include "text_to_image_part_*.tar" --local-dir data/src/ShareGPT-4o-Image
+hf download OpenDatasets/dalle-3-dataset --repo-type dataset \
     --revision 96822d5c0b1338ec4bfd04b0d5909fa070e301b6 --include "*.parquet" --local-dir data/src/dalle-3-dataset
 ```
 
