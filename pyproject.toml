@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "juice"
+version = "0.1.0"
+description = "JUICE: Unified Multimodal Modeling in Pretrained Representation Spaces"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.5",
+    "torchvision>=0.20",
+    # transformers 5.19 calls torch.accelerator (PyTorch 2.6+); 5.13 is the tested version.
+    "transformers>=4.46,<5.14",
+    "huggingface_hub>=0.26",
+    "safetensors>=0.4",
+    "numpy",
+    "pillow",
+    "pyyaml",
+]
+
+[project.optional-dependencies]
+train = ["webdataset>=0.2.100,<1"]  # the data order was checked with 0.2.111
+eval = ["pyarrow>=14"]
+
+[tool.setuptools.packages.find]
+include = ["juice*"]

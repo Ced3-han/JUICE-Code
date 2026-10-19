@@ -1,0 +1,24 @@
+# Parallel text head (the readout of the question-answering results): two stages of 8,000
+# steps at batch 64 on one GPU. Stage 2 starts from stage 1. The texts are the pretraining-pool texts,
+# read in the order of the pretraining manifests (num_workers 1 and the data seeds fix the order).
+run_name: text_head
+train_manifests: [data/manifests/blip3o_long_caption_train.txt, data/manifests/blip3o_short_caption_train.txt, data/manifests/journeydb_train.txt,
+  data/manifests/cambrian_gqa_x4.txt, data/manifests/cambrian_coco_x4.txt, data/manifests/cambrian_lnqa_x4.txt,
+  data/manifests/cambrian_vizwiz_x4.txt, data/manifests/cambrian_oodvqa_x4.txt, data/manifests/cambrian_vg.txt,
+  data/manifests/cambrian_dvqa.txt, data/manifests/cambrian_ocr_vqa.txt, data/manifests/cambrian_clevr.txt,
+  data/manifests/cambrian_tallyqa.txt, data/manifests/cambrian_hfdata.txt, data/manifests/cambrian_Q-Instruct-DB.txt,
+  data/manifests/cambrian_docvqa.txt, data/manifests/cambrian_pathvqa.txt, data/manifests/cambrian_chartqa.txt,
+  data/manifests/cambrian_ai2d.txt, data/manifests/cambrian_scienceqa.txt, data/manifests/cambrian_coco_valrows.txt,
+  data/manifests/coco_train2014_caption.txt]
+train_manifest_counts: [29187000, 4728000, 4197986, 943833, 634889, 275207, 20128, 16630, 336224, 774888, 317675,
+  351828, 250279, 313014, 284400, 35240, 29940, 28272, 15075, 5867, 32010, 414113]
+data_seed: 4242
+wds_shard_seed: 4242
+num_workers: 1
+stages: 2
+steps: 8000
+batch_size: 64
+learning_rate: 0.0001
+corrupt_frac: 0.5
+tail_weight: 0.2
+seed: 0

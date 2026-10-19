@@ -1,0 +1,29 @@
+# Task fine-tune, VSP / FrozenLake (paper Sec. 5.4, App. D.4): 5k steps from the SFT weights,
+# global batch 1024. Paper run: 4 GPUs x 8 x 32 accumulation (on 8 GPUs, --set grad_accum_steps=16).
+# init_from: the raw weights ("model") of the SFT run at step 15000.
+run_name: vsp_siglip2
+image_space: siglip2
+init_from: outputs/train/sft_siglip2/checkpoints/checkpoint_015000.pt
+train_manifests: [data/manifests/vsp_train.txt]
+train_manifest_counts: [55939]
+num_workers: 2
+task_mixture: [0.6, 0.2, 0.2]
+t_shift: 8.485
+qa_answer_window: 64
+qa_window_tail_weight: 0.1
+qa_span_regimes: [i2t, product]
+img_known_inpaint: true
+img_known_regimes: [product, t2i]
+batch_size: 1024
+micro_batch_size: 8
+grad_accum_steps: 32
+num_steps: 5000
+learning_rate: 0.0001
+warmup_steps: 250
+ema_decay: 0.99995
+ema_fast_decay: 0.9996
+ddp_bf16_compress: false
+ckpt_every: 1000
+ckpt_milestones: [5000]
+save_keep: 2
+qa_rows_force_i2t: false

@@ -1,0 +1,31 @@
+# Stage 1, pretraining (paper Sec. 5.1, App. A.7): 60k steps from scratch, global batch 4096,
+# on the pretraining pool (captions + Cambrian QA). Paper run: 8 GPUs x 8 x 64 accumulation.
+run_name: pretrain_dino
+image_space: webssl_dino
+train_manifests: [data/manifests/blip3o_long_caption_train.txt, data/manifests/blip3o_short_caption_train.txt, data/manifests/journeydb_train.txt,
+  data/manifests/cambrian_gqa_x4.txt, data/manifests/cambrian_coco_x4.txt, data/manifests/cambrian_lnqa_x4.txt,
+  data/manifests/cambrian_vizwiz_x4.txt, data/manifests/cambrian_oodvqa_x4.txt, data/manifests/cambrian_vg.txt,
+  data/manifests/cambrian_dvqa.txt, data/manifests/cambrian_ocr_vqa.txt, data/manifests/cambrian_clevr.txt, data/manifests/cambrian_tallyqa.txt,
+  data/manifests/cambrian_hfdata.txt, data/manifests/cambrian_Q-Instruct-DB.txt, data/manifests/cambrian_docvqa.txt,
+  data/manifests/cambrian_pathvqa.txt, data/manifests/cambrian_chartqa.txt, data/manifests/cambrian_ai2d.txt, data/manifests/cambrian_scienceqa.txt,
+  data/manifests/cambrian_coco_valrows.txt, data/manifests/coco_train2014_caption.txt]
+train_manifest_counts: [29187000, 4728000, 4197986, 943833, 634889, 275207, 20128, 16630, 336224, 774888, 317675,
+  351828, 250279, 313014, 284400, 35240, 29940, 28272, 15075, 5867, 32010, 414113]
+num_workers: 8
+task_mixture: [0.556, 0.222, 0.222]
+t_shift: 8.0
+qa_answer_window: 12
+qa_window_tail_weight: 0.1
+qa_rows_force_i2t: true
+batch_size: 4096
+micro_batch_size: 8
+grad_accum_steps: 64
+num_steps: 60000
+learning_rate: 0.0004
+warmup_steps: 5000
+ema_decay: 0.99995
+ema_fast_decay: 0.9996
+ddp_bf16_compress: true
+ckpt_every: 10000
+ckpt_milestones: [10000, 20000, 30000, 40000, 50000, 60000]
+save_keep: 3

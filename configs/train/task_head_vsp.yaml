@@ -1,0 +1,18 @@
+# Linear task head of the VSP (FrozenLake) planning models: 1,500 steps at batch 64 on one GPU,
+# on the texts ("Question: ... Answer: ...") of the task's training shards (docs/PLANNING.md, section 3).
+# The images are not used. The data order depends on num_workers, data_seed and wds_shard_seed.
+# seed: torch seed of the initialization (drawn on the CPU) and of the corruption noise.
+# The paper's heads had no fixed seed; other seeds give equivalent heads (docs/TRAIN.md, section 9).
+run_name: task_head_vsp
+train_manifests: [data/manifests/vsp_train.txt]
+train_manifest_counts: [55939]
+data_seed: 4242
+wds_shard_seed: 4242
+num_workers: 2
+steps: 1500
+batch_size: 64
+learning_rate: 0.001
+weight_decay: 0.01
+corrupt_frac: 0.5
+noise_std: 1.0
+seed: 67280421310721

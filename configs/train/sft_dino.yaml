@@ -1,0 +1,32 @@
+# Stage 2, SFT (paper Sec. 5.1, App. A.7): 15k steps from the stage-1 weights,
+# global batch 1024; caption rows are t2i, QA rows are i2t. Paper run: 8 GPUs.
+# init_from: the raw weights ("model") of your stage-1 run at step 60000.
+run_name: sft_dino
+image_space: webssl_dino
+init_from: outputs/train/pretrain_dino/checkpoints/checkpoint_060000.pt
+train_manifests: [data/manifests/blip3o_ft60k_r64_x75.txt, data/manifests/dalle3_t2i_x52.txt, data/manifests/sharegpt4o_t2i_x52.txt,
+  data/manifests/vqav2_train_v2_s13_x7.txt, data/manifests/cambrian_v2_gqa_x2.txt, data/manifests/cambrian_v2_coco_x2.txt,
+  data/manifests/cambrian_vg_x2.txt, data/manifests/cambrian_v2_ocr_vqa_x2.txt, data/manifests/cambrian_vizwiz_x2.txt,
+  data/manifests/cambrian_coco_valrows.txt, data/manifests/cambrian_mcq_x10.txt, data/manifests/scienceqa_train_mcq_x10.txt,
+  data/manifests/sft_capc_coco2014_x2.txt, data/manifests/sft_capc_blip3o_short.txt, data/manifests/sft_capd_blip3o_long.txt,
+  data/manifests/sft_capd_blip3o60k_x4.txt, data/manifests/sft_capd_dalle3_x4.txt, data/manifests/sft_long_all.txt]
+train_manifest_counts: [3776625, 989248, 2377284, 3010000, 1887666, 1269778, 672448, 635350, 40256, 32010, 433570,
+  53130, 827606, 1250000, 1500000, 56932, 59584, 1718221]
+num_workers: 8
+task_mixture: [0.0, 1.0, 0.0]
+t_shift: 8.0
+qa_answer_window: 12
+qa_window_tail_weight: 0.1
+qa_rows_force_i2t: true
+batch_size: 1024
+micro_batch_size: 8
+grad_accum_steps: 16
+num_steps: 15000
+learning_rate: 0.0001
+warmup_steps: 250
+ema_decay: 0.99995
+ema_fast_decay: 0.9996
+ddp_bf16_compress: false
+ckpt_every: 2500
+ckpt_milestones: [5000, 15000]
+save_keep: 3
