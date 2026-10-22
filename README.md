@@ -1,6 +1,6 @@
 # JUICE: Unified Multimodal Modeling in Pretrained Representation Spaces
 
-**[Paper](<ARXIV_LINK>) | [Project Page](https://github.com/Ced3-han/JUICE-Website) | [Models](https://huggingface.co/collections/CedLJH/juice)**
+**[Paper](https://arxiv.org/abs/2610.28801) | [Project Page](https://ced3-han.github.io/JUICE-Website/) | [Models](https://huggingface.co/collections/CedLJH/juice)**
 
 JUICE (Joint Unified multimodal modeling In Continuous Encoder spaces) is one flow-matching
 Transformer (MM-RiT, 2.1 B parameters) that generates images and text together.
@@ -338,7 +338,14 @@ JUICE-Code/
 ## 8. Citation
 
 ```bibtex
-<BIBTEX>
+@article{li2026juice,
+  title   = {{JUICE}: Unified Multimodal Modeling in Pretrained Representation Spaces},
+  author  = {Li, Jiahan and Su, Huangyuan and Tong, Shengbang and Yang, Shusheng and
+             Guo, Ruihan and Huang, Suozhi and Zhao, Hexu and Sharma, Pratyusha and
+             Yang, Sherry and Gu, Jiatao and Fergus, Rob and Cho, Kyunghyun},
+  journal = {arXiv preprint arXiv:2610.28801},
+  year    = {2026}
+}
 ```
 
 ## 9. Acknowledgements
