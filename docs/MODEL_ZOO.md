@@ -43,19 +43,16 @@ The inference defaults in `config.json`:
 The numbers of the SFT models are the results of the paper (text-to-image: 25 steps, guidance 5).
 VQAv2 test-dev is the score of the EvalAI server for the files of `docs/EVAL_VQA.md` section 7.
 DPG-Bench uses the scoring rule of the official script (1,064 prompts, `docs/EVAL_T2I.md`).
-We measured the Base models at 100 steps (guidance 5); the paper does not report these numbers.
 The guides tell you how to reproduce the numbers.
 
 ### Text-to-image (`docs/EVAL_T2I.md`)
 
 | Model | Steps | GenEval | DPG-Bench |
 |---|---|---|---|
-| JUICE-2B-SigLIP2-Base | 100 | 0.622 | 81.99 |
-| JUICE-2B-DINO-Base | 100 | 0.622 | 79.68 |
-| JUICE-2B-SigLIP2 | 25 | 0.866 | 85.22 |
-| JUICE-2B-DINO | 25 | 0.883 | 84.38 |
+| JUICE-2B-SigLIP2 | 25 | 0.866 | 85.27 |
+| JUICE-2B-DINO | 25 | 0.883 | 84.55 |
 
-At 100 steps, the SFT models give GenEval 0.868 and 0.886 and DPG-Bench 85.27 and 84.55 (`docs/EVAL_T2I.md`, section 7).
+At 100 steps, the SFT models give GenEval 0.868 and 0.886 (`docs/EVAL_T2I.md`, section 7).
 
 ### Question answering (`docs/EVAL_VQA.md`)
 
