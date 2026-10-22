@@ -16,7 +16,7 @@ Layout of one forward pass:
   time tokens    4 image-time + 4 text-time tokens appended to the text side
   joint blocks   per-modality Q/K/V, norms, projections and SwiGLU FFNs, one
                  bidirectional attention over [text, time tokens, image]
-                 (paper Eq. 8); 2D RoPE on image tokens, 1D RoPE on the text side
+                 (paper Eq. 7); 2D RoPE on image tokens, 1D RoPE on the text side
   outputs        per-modality RMSNorm + linear head back to D_img / D_txt
 
 Parameter names match the research checkpoints, so `load_state_dict` reads the
@@ -189,7 +189,7 @@ class TextBlock(nn.Module):
 
 
 class JointBlock(nn.Module):
-    """Two-stream block: modality-specific weights, one joint attention (paper Eq. 8)."""
+    """Two-stream block: modality-specific weights, one joint attention (paper Eq. 7)."""
 
     def __init__(self, cfg: MMRiTConfig, n_time_tokens: int):
         super().__init__()
