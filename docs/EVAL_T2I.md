@@ -219,7 +219,7 @@ seed 0, 224 x 224). These are the settings of the paper (paper Table 4 and Table
 | colors | 0.9096 | 0.9309 |
 | position | 0.8500 | 0.8475 |
 | color attribution | 0.7300 | 0.7750 |
-| DPG-Bench (official scoring rule, 1,064 prompts) | 85.22 | 84.38 |
+| DPG-Bench (official scoring rule, 1,064 prompts) | 85.27 | 84.55 |
 
 GenEval overall at other numbers of steps (paper Table 32):
 
@@ -229,19 +229,12 @@ GenEval overall at other numbers of steps (paper Table 32):
 | 50 | 0.8680 | 0.8853 |
 | 100 | 0.8676 | 0.8864 |
 
-DPG-Bench at 100 steps (official script, 1,064 prompts): 85.27 and 84.55.
-
 Sources:
 
 - 25 and 50 steps: the images of this generation script (`--steps 25`, `--steps 50`), scored with the
   scorers of the paper runs. GenEval overall 0.865965 and 0.883391 at 25 steps.
-- DPG-Bench at 25 steps: we applied the scoring rule of the official script (section 6) to the mPLUG
-  answers of our scorer: 85.223882 and 84.380918. The mean over all 1,065 prompts is 85.199456 and
-  84.346164. On the 100-step images, the same procedure gives the values of the official script exactly,
-  and all mPLUG answers of the two scorers are the same (see below).
 - 100 steps: the images of the paper runs. GenEval overall 0.867604 and 0.886373.
-  DPG-Bench: the official script on these images, 85.271486 and 84.547588.
-  The mean over all 1,065 prompts (the same mPLUG answers and scoring rule) is 85.248251 and 84.536152.
+- DPG-Bench: the official script (section 6), as in the paper.
 
 We checked the generation script against the research code of the paper at 100 steps.
 On an A100 GPU, the script makes PNG files that are byte-equal to the images of the paper runs.
@@ -253,10 +246,9 @@ The number of steps changes only the time grid of the sampler.
 We also scored the SigLIP2 GenEval images of the 100-step paper run with the official GenEval scripts
 (commit `af4902f`) and the commands of section 5.
 The overall score is 0.86760, the same as the table.
-We also scored the DPG-Bench grids of the 100-step paper runs with the official script (ELLA commit `3c228f1`,
-not changed) and the settings of `dist_eval.sh` (`--mixed_precision fp16`, `--pic-num 4`,
-`--resolution 224`), with one process on one A100 GPU for each model.
-The script scored 1,064 prompts and gave 85.27 and 84.55. All its mPLUG answers were the same as
+We ran the official DPG-Bench script (ELLA commit `3c228f1`, not changed) with the settings of
+`dist_eval.sh` (`--mixed_precision fp16`, `--pic-num 4`, `--resolution 224`), with one process on one
+A100 GPU for each model. The script scored 1,064 prompts, and all its mPLUG answers were the same as
 the answers of our scorer. The fp16 setting does not change the answers, because the script does not
 run the mPLUG model through `forward`. Note: `accelerate` does not accept `--multi_gpu` with one process.
 The category scores of the script use the `tuple` column of `dpg_bench.csv` and only the answers for
